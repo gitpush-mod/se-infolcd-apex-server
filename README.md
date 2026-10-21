@@ -1,69 +1,60 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=180&color=0:0B1021,45:2563EB,100:7C3AED&text=InfoLCD%20%E2%80%94%20Apex%20Update&fontColor=ffffff&fontAlignY=35&fontSize=32&desc=Real-time%20ship%20%2B%20base%20data%20on%20Apex%20LCD%20screens&descAlignY=57&descSize=16" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&height=180&color=0:0B1021,45:2563EB,100:7C3AED&text=InfoLCD%20%E2%80%94%20Apex%20Server&fontColor=ffffff&fontAlignY=35&fontSize=32&desc=InfoLCD%20for%20crossplay%20servers%2C%20console%20players%20included&descAlignY=57&descSize=16" />
 </p>
 
 <p align="center">
-  <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3580736330"><img src="https://img.shields.io/badge/Steam%20Workshop-Subscribe-1B2838?style=for-the-badge&logo=steam&logoColor=white" alt="Steam Workshop" /></a>
-  <a href="https://github.com/gitpush-mod/se-infolcd-apex-update/issues/new?template=bug_report.md&labels=bug"><img src="https://img.shields.io/badge/Report%20a%20bug-red?style=for-the-badge&logo=github&logoColor=white" alt="Report a bug" /></a>
+  <img src="https://img.shields.io/badge/Status-Open%20Alpha-F59E0B?style=for-the-badge" alt="Open alpha" />
+  <a href="https://github.com/gitpush-mod/se-infolcd-apex-server/issues/new?template=bug_report.md&labels=bug"><img src="https://img.shields.io/badge/Report%20a%20bug-red?style=for-the-badge&logo=github&logoColor=white" alt="Report a bug" /></a>
   <img src="https://img.shields.io/badge/Space%20Engineers-1-0EA5E9?style=for-the-badge" alt="SE1" />
-  <img src="https://img.shields.io/badge/Client--side%20only-checkmark-10B981?style=for-the-badge" alt="Client-side" />
+  <img src="https://img.shields.io/badge/Server--side-checkmark-10B981?style=for-the-badge" alt="Server-side" />
 </p>
 
-> **"I want to know what my ship is doing without leaving cockpit view."**
+> **"Consoles can't run scripts, so the server runs them for you."**
 
-**Chris's flagship SE mod.** Text-surface scripts + config that render live ship and base data on **Apex LCD blocks** — no server code, no dependencies, no world corruption if you remove it. Currently sitting on **1,335+ Steam Workshop subscribers**.
+**InfoLCD for crossplay servers.** The same LCD apps as [InfoLCD — Apex Update](https://github.com/gitpush-mod/se-infolcd-apex-update), except the server does the work and sends the finished screens to every player. Console players included.
+
+> [!WARNING]
+> **Open alpha: not playable yet.** This repo was forked from Apex Update on 2026-10-21, and the server-side conversion hasn't started. Follow along on the [project board](https://github.com/orgs/gitpush-mod/projects/13).
 
 <p align="center">
-  <img src="thumb.jpg" alt="InfoLCD Apex Update preview" width="480" />
+  <img src="thumb.jpg" alt="InfoLCD apps on an LCD" width="480" />
 </p>
 
-## ✨ What it shows
+## 🧭 Why a separate mod?
 
-| Category | What lands on the LCD |
+Consoles can't run mod scripts. Apex Update's apps run on each player's own machine, so a console refuses to load any world that has it.
+
+This edition runs **only on the server**. It's published with the **Server Scripts** tag, so every player's game skips its code, PC or console. The server draws the screens, and the game syncs them to everyone like any other LCD.
+
+## ✨ What it will show
+
+The same 19 apps as Apex Update, converted in two waves, inventory first:
+
+| Wave | Apps |
 |---|---|
-| **Cargo** | Total cargo mass, per-container breakdown, sorted by mass |
-| **Power** | Reactor + battery output, consumption, minutes-remaining projection |
-| **Jump drive** | Charge %, ETA to full, per-drive status on ships with multiple |
-| **Ammo** | Ammo counts per weapon type across the whole grid |
-| **Airlock** | Pressurization state per airlock, warning colors on active vent |
-| **Detailed info** | Anything the block's DetailedInfo exposes — automatically formatted |
-| **Custom layouts** | Position-based screen layout scales to any LCD size, not hardcoded |
+| **1** | Components, Cargo, Ingots, Ores, Items, Ammo |
+| **2** | Airlock Monitor, Container, Damage Control, Detailed Info, Door Monitor, Farming, Gas Production, Grid & Flight Info, Life Support, Power, Production, Systems, Weapons |
+
+## 🎯 Compatibility (planned)
+
+- ✅ **Crossplay dedicated servers** (Network Type EOS + Console Compatibility, mods from mod.io). This is the main target.
+- ✅ **PC dedicated servers and single-player.** The host is the server, so it runs there too.
+- ❌ **Console single-player or console-hosted games.** There the console is the server, and consoles can't run scripts.
+- ⚠️ **Apex Update or Apex Advanced in the same world.** Not for now: the forked code still registers the same script names. Fixing that is part of the alpha.
 
 ## 🚀 Install
 
-**Via Steam Workshop (recommended):**
-1. [Subscribe on the Workshop page](https://steamcommunity.com/sharedfiles/filedetails/?id=3580736330)
-2. Enable the mod when creating or loading a world
-3. Place an Apex LCD block, open its terminal, and select an `InfoLCD - <thing>` script
-
-**No world-side setup required.** Client-side only — you can add it to any existing world.
-
-## 🎯 Compatibility
-
-- ✅ **Space Engineers 1** — actively maintained
-- ✅ **Multiplayer** — works on dedicated servers because it does nothing server-side
-- ✅ **Existing saves** — safe to add or remove; scripts fall back to blank if disabled
-- ✅ **Other LCD mods** — coexists (only touches Apex LCD blocks specifically)
-- ❌ **InfoLCD — Apex Advanced** — do not run both; they register the same scripts
-
-## 🧑‍🤝‍🧑 Sibling mod
-
-[**se-infolcd-apex-advanced**](https://github.com/gitpush-mod/se-infolcd-apex-advanced) is the same mod built for the [APEX.Advanced!](https://steamcommunity.com/sharedfiles/filedetails/?id=3570977190) survival overhaul — it tracks HydroSolution instead of water, understands Nutrient Pellets and Composters, and adds a screen-overflow app.
-
-Pick whichever matches your world, and **run only one**: the two register the same script names. Since v2.0 they share a single codebase, so neither is behind the other on features.
+Not yet. Test builds will go up on **mod.io as an open alpha**, and this section will get the link and the server-admin steps when they do.
 
 ## 🐛 Found a bug?
 
-Two options, both fast:
-
-- **[Open an issue with the bug report template](https://github.com/gitpush-mod/se-infolcd-apex-update/issues/new?template=bug_report.md&labels=bug)** — best for reproducible bugs, gets tracked and fixed
-- **Leave a Steam Workshop comment** — better for quick "hey does this work with X?" questions
+**[Open an issue with the bug report template](https://github.com/gitpush-mod/se-infolcd-apex-server/issues/new?template=bug_report.md&labels=bug)**. Alpha feedback is exactly what this stage is for.
 
 ## 🙌 Credits
 
 - **Author:** [Chris Carpenter (Godimas101)](https://github.com/Godimas101)
-- **Built with:** the Space Engineers modding SDK + a lot of iteration on real ships
-- **Sturmgrenadier Hosting** — [sghq.org](https://sghq.org/), the SE server community that stress-tests this mod
+- **Built on:** [InfoLCD — Apex Update](https://github.com/gitpush-mod/se-infolcd-apex-update)
+- **Alpha testers:** the console players who asked for it, and offered to help test it
 
 ## 🧡 Support
 

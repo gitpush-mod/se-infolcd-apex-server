@@ -34,5 +34,5 @@ jobs:
     steps:
       - uses: actions/add-to-project@v2.0.0
         with:
-          project-url: https://github.com/orgs/gitpush-mod/projects/3
+          project-url: https://github.com/orgs/gitpush-mod/projects/13
           github-token: ${{ secrets.PAT_MOD_PROJECT }}
