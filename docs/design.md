@@ -75,14 +75,20 @@ What this means for this mod:
 
 ## 4. Setting up a screen from a console
 
-- The terminal's Custom Data control (`MyTerminalBlock.CreateTerminalControls`)
-  has no platform gate.
-- The text editor (`MyGuiScreenText`) checks
-  `MyPlatformGameSettings.IsMultilineEditableByGamepad`. It's false on PC, and
-  the console build presumably turns it on. Unconfirmed: the console spike
-  asks PocketOtter.
-- Renaming blocks is the fallback. It's a single-line text box that works
-  everywhere.
+Confirmed on PlayStation by our alpha tester on 2026-10-22 (S0):
+
+- **Custom Data works.** It opens and takes typing with a controller. There's
+  a learning curve, but it's workable, and a plugged-in keyboard and mouse
+  work too.
+- **Renaming blocks works.**
+
+So Custom Data is the setup surface, the same place Apex Update keeps its
+config. Block-name tags aren't needed for console access.
+
+What the game code says, for reference: the terminal's Custom Data control
+(`MyTerminalBlock.CreateTerminalControls`) has no platform gate, and the text
+editor (`MyGuiScreenText`) checks
+`MyPlatformGameSettings.IsMultilineEditableByGamepad`, which is false on PC.
 
 ## 5. Crossplay server facts (community docs)
 
