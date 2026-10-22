@@ -17,7 +17,7 @@
 > **Open alpha: not playable yet.** This repo was forked from Apex Update on 2026-10-21, and the server-side conversion hasn't started. Follow along on the [project board](https://github.com/orgs/gitpush-mod/projects/13).
 
 <p align="center">
-  <img src="thumb.jpg" alt="InfoLCD apps on an LCD" width="480" />
+  <img src="thumb.jpg" alt="InfoLCD Apex Server: a server room aboard a space station" width="480" />
 </p>
 
 ## 🧭 Why a separate mod?
@@ -54,7 +54,7 @@ Not yet. Test builds will go up on **mod.io as an open alpha**, and this section
 
 - **Author:** [Chris Carpenter (Godimas101)](https://github.com/Godimas101)
 - **Built on:** [InfoLCD — Apex Update](https://github.com/gitpush-mod/se-infolcd-apex-update)
-- **Alpha testers:** the console players who asked for it, and offered to help test it
+- **Alpha tester:** PocketOtter, who asked for a console version and signed up to test it
 
 ## 🧡 Support
 

@@ -36,23 +36,13 @@ Concrete rules — same as TCS ticket-first:
 - **Need Chris to check something before closing?** Move the ticket to **In QA** and comment with exactly what he needs to look at. Do NOT set to Done — that's Chris's call after review.
 - **Finished?** Close the ticket with a closing summary comment (what you did / problems + solutions / anything NOT done).
 - **Same-session micro-work?** Open + close in the same session — but the ticket exists.
+- **Part of an epic?** Make the ticket a sub-issue of the epic, and start its body with `Epic: <owner/repo#n>`. Epics can live in other repos and on other boards. If the epic's board has "Auto-add sub-issues to project" switched on (the Apex Update board does), remove the copy it adds: the ticket belongs on this board.
+- **Posting where players read?** A comment on a Discord-synced issue (label `fromDiscord`) mirrors to its Discord thread under Chris's name, so **ask Chris before posting**. Write for a player: plain words, no code, bare URLs (a markdown link posted from GitHub came through badly in Discord on 2026-10-16). Technical discussion stays in this repo's tickets.
 - **Older than 30 days in Done?** The org's weekly auto-archive job (`gitpush-mod/.github`) moves it to Archived. The closed ticket + CHANGELOG entry persist.
 
 Automation: new issues and PRs are auto-added to the board (`add-to-project.yml`). Closing a ticket as completed appends an entry to this repo's `CHANGELOG.md` through a `bot/changelog` PR (workflow in `gitpush-mod/.github`). Both use the `PAT_MOD_PROJECT` org secret, which is already installed.
 
 **Do NOT** work on this mod without a ticket. If Chris asks for something small, create + immediately-close the ticket. It's still faster than the paper-trail debt of un-ticketed work.
-
-### The epic and the tester (this repo only)
-
-Everything here rolls up to **[se-infolcd-apex-update#20](https://github.com/gitpush-mod/se-infolcd-apex-update/issues/20)**,
-the Discord-synced thread with our console tester, PocketOtter.
-
-- **Every new ticket becomes a sub-issue of #20**, and its body starts with `Epic: gitpush-mod/se-infolcd-apex-update#20`.
-- **Board 3 auto-adds #20's sub-issues to the Apex Update board.** After linking a ticket, remove it from board 3. It belongs on board 13 only.
-- **Player-facing updates go on #20 as comments.** They mirror to PocketOtter's Discord thread under Chris's name, so **ask Chris before posting**. Write for a player: plain words, no code, and bare URLs. A markdown link posted from GitHub came through badly in Discord on 2026-10-16.
-- Technical discussion stays in this repo's tickets.
-- **No `bug` or `Suggestion` labels on dev tickets.** Those labels mirror to the Discord feedback channel.
-- Keep #20 open until the release ticket closes it.
 
 ## For agents
 
@@ -113,7 +103,7 @@ the Discord-synced thread with our console tester, PocketOtter.
 - **Local test copy.** Test from `%AppData%\SpaceEngineers\Mods\InfoLCD - Apex Server`, copied from this repo. Never copy Apex Update's AppData folder: its `modinfo.sbmi` carries Apex Update's Workshop ID.
 - **Single-player first.** The host is the server, so the server path runs.
 - **Then a local dedicated server plus a PC client.** Check that screens update for the client, nothing of ours runs on the client, and a late joiner sees the last frame.
-- **Console path.** Only a published build with the Server Scripts tag proves it: open-alpha rounds on the crossplay test server, tracked in tickets and reported on #20.
+- **Console path.** Only a published build with the Server Scripts tag proves it: open-alpha rounds on the crossplay test server, tracked in tickets, with results reported on the epic's Discord-synced thread.
 - **Save-safety.** Load an existing world, add or remove the mod, verify no CustomData strings broke and no blocks vanished.
 - **Look for LINQ or per-tick allocations** in scripts before pushing. On this mod they cost the whole server.
 - **Watch the logs.** Client: `%AppData%\SpaceEngineers\SpaceEngineers_*.log`. Dedicated server: the `.log` files in the instance folder. If red or yellow lines mention the mod, quote them in the ticket.
@@ -128,7 +118,7 @@ the Discord-synced thread with our console tester, PocketOtter.
 Wired into the [TCS Discord bot](https://github.com/The-Canadian-Space/tcs-forum-watcher). Full flow (what mirrors when, tag map, gotchas): [`mods/AGENTS.md` → Publishing + feedback flow](../AGENTS.md) or the wiki at [`discord/release-and-feedback-flow`](https://docs.thecanadian.space/discord/release-and-feedback-flow/).
 
 - Mod tag: **`SE: Apex Server`**.
-- Issues labelled `bug` or `suggestion` → `🐛-mod-feedback` (auto).
+- Issues labelled `bug` or `suggestion` → `🐛-mod-feedback` (auto). Dev tickets never get those labels.
 - GitHub releases → persistent thread in `📦-mod-updates`. **Public.**
 - Open-alpha builds go to mod.io as **InfoLCD - Apex Server (Open Alpha)**, tagged **Server Scripts**. Chris uploads them, and the upload is tracked on the board. There's no Steam Workshop listing yet.
 - **Releases are user-driven.** Do NOT run `gh release create` or push a release tag autonomously. If the work looks releasable, **ask** — describe the release notes and let Chris decide.
@@ -146,7 +136,7 @@ Wired into the [TCS Discord bot](https://github.com/The-Canadian-Space/tcs-forum
 
 ## Related
 
-- Epic + tester thread: [se-infolcd-apex-update#20](https://github.com/gitpush-mod/se-infolcd-apex-update/issues/20)
+- Current epic: [se-infolcd-apex-update#20](https://github.com/gitpush-mod/se-infolcd-apex-update/issues/20), the server-side edition. It's Discord-synced with our alpha tester, PocketOtter.
 - Upstream: [`gitpush-mod/se-infolcd-apex-update`](https://github.com/gitpush-mod/se-infolcd-apex-update)
 - Sibling: [`gitpush-mod/se-infolcd-apex-advanced`](https://github.com/gitpush-mod/se-infolcd-apex-advanced)
 - Parent when checked out under Chris's tree: `mods/AGENTS.md`
