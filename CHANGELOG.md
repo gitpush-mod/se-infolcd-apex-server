@@ -7,3 +7,7 @@ Forked from [InfoLCD - Apex Update](https://github.com/gitpush-mod/se-infolcd-ap
 
 ## [Unreleased]
 
+- \[Spike S1\] Hello LCD: prove a server-drawn screen reaches players ([#4](https://github.com/gitpush-mod/se-infolcd-apex-server/issues/4)) — closed 2026-10-27 by @Godimas101
+- \[Spike S0\] Console check with PocketOtter (no code) ([#3](https://github.com/gitpush-mod/se-infolcd-apex-server/issues/3)) — closed 2026-10-22 by @Godimas101
+- \[Setup\] Bootstrap the repo: shared history, board, CI, mod identity ([#1](https://github.com/gitpush-mod/se-infolcd-apex-server/issues/1)) — closed 2026-10-22 by @Godimas101
+
