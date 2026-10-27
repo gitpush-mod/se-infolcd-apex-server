@@ -41,18 +41,23 @@ What this means for this mod:
   `MySerializableSpriteCollection` that is replicated to clients. A
   Programmable Block's screen uses the same path on a dedicated server.
 - **LCD panels:** the frame lives in a synced field
-  (`MyTextPanelComponent.m_externalSprites`) and is saved with the block
-  (`MyObjectBuilder_TextPanel.Sprites`), so a player who joins later should get
-  the last frame.
+  (`MyTextPanelComponent.m_externalSprites`), and the block's saved data has a
+  `Sprites` field (`MyObjectBuilder_TextPanel.Sprites`). **But S1 (single
+  player, 2026-10-27) found it empty**: a tagged LCD saved
+  `<Sprites><Length>0</Length>`, and no drawn frame was anywhere in the world
+  save. So the driver must redraw every screen right after load, and a late
+  joiner may see a blank screen until the next draw (S2 checks this on a
+  dedicated server).
 - **Multi-screen blocks** (cockpits, programmable blocks, …):
   `MyMultiTextPanelComponent.OnUpdateSpriteCollection` is an event marked
   `[Reliable, Server, Broadcast, DistanceRadius(32)]`. Only players within
-  32 m receive each update. The frame is saved too
-  (`MySerializedTextPanelData.Sprites`), but someone who walks up later can
-  see a stale frame until the next send. These screens need a periodic re-send.
+  32 m receive each update. Their saved data has a `Sprites` field too
+  (`MySerializedTextPanelData.Sprites`), but S1 found no drawn frames there
+  either. Someone who walks up later can see a stale or blank screen until the
+  next send, so these screens need a periodic re-send.
 - For drawn sprites to show, the screen should be in script mode with no
-  script selected, as with a Programmable Block screen. This is expected, not
-  yet confirmed in-game (S1).
+  script selected, as with a Programmable Block screen. Confirmed in S1: the
+  server sets both itself, and the screen switches over with no player action.
 
 ## 3. Reusing the 19 apps
 
