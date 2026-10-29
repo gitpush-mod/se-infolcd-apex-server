@@ -1,7 +1,7 @@
 // S3 spike (se-infolcd-apex-server#6). Throwaway: lives on a spike branch, never merged as-is.
 // Runs the existing InfoLCD apps from a server-side session component instead of the screen's
 // Script menu. Block name tags:
-//   [ApexServer]          Components on every screen of the block, at the app's own rate
+//   [ApexServer]          Components on every screen of the block, redrawn every 2 seconds
 //   [ApexServer:Cargo]    another app (any name in Apps below)
 //   [ApexServer:Cargo:5]  ...redrawn every 5 seconds instead (1 to 600)
 //   [ApexServer:5]        Components every 5 seconds
@@ -33,6 +33,9 @@ namespace MahrianeIndustries.LCDInfo
         const int ScanEveryTicks = 300;
         const int ReportEveryTicks = 3600;
         const int MaxRedrawSeconds = 600;
+        // Not the apps' own 10 ticks: on a server every frame goes over the network, and S4 hasn't
+        // measured that yet. 2 s is what S1 ran at on the crossplay test server.
+        const int DefaultRedrawSeconds = 2;
 
         static readonly Dictionary<string, Func<IMyTextSurface, IMyCubeBlock, Vector2, MyTextSurfaceScriptBase>> Apps =
             new Dictionary<string, Func<IMyTextSurface, IMyCubeBlock, Vector2, MyTextSurfaceScriptBase>>(StringComparer.OrdinalIgnoreCase)
@@ -152,7 +155,7 @@ namespace MahrianeIndustries.LCDInfo
                 Drop(t, false);
             }
 
-            t = new TaggedBlock { Block = block, AppName = appName, Seen = true };
+            t = new TaggedBlock { Block = block, AppName = appName, Seconds = seconds, Seen = true };
             _tagged[block.EntityId] = t;
 
             Func<IMyTextSurface, IMyCubeBlock, Vector2, MyTextSurfaceScriptBase> make;
@@ -184,7 +187,7 @@ namespace MahrianeIndustries.LCDInfo
         void Schedule(TaggedBlock t, int seconds)
         {
             t.Seconds = seconds;
-            t.RedrawTicks = seconds > 0 ? seconds * 60 : t.Screens.Count > 0 ? OwnRate(t.Screens[0].App) : 100;
+            t.RedrawTicks = seconds * 60;
             foreach (var s in t.Screens) s.NextRunTick = _tick;
         }
 
@@ -241,22 +244,16 @@ namespace MahrianeIndustries.LCDInfo
             t.Screens.Clear();
         }
 
-        // The rate the game runs the app at from the Script menu.
-        static int OwnRate(MyTextSurfaceScriptBase app)
-        {
-            return app.NeedsUpdate == ScriptUpdate.Update10 ? 10 : 100;
-        }
-
         static string Describe(TaggedBlock t)
         {
-            return t.Seconds > 0 ? $"every {t.Seconds} s" : $"every {t.RedrawTicks} ticks (the app's own rate)";
+            return $"every {t.Seconds} s";
         }
 
         // "[ApexServer]", "[ApexServer:Cargo]", "[ApexServer:Cargo:5]" or "[ApexServer:5]".
         static bool ParseTag(string name, out string app, out int seconds)
         {
             app = DefaultApp;
-            seconds = 0;
+            seconds = DefaultRedrawSeconds;
             int at = name.IndexOf(Tag, StringComparison.OrdinalIgnoreCase);
             if (at < 0) return false;
             int end = name.IndexOf(']', at);
