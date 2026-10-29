@@ -35,6 +35,10 @@ What this means for this mod:
 - **No console-hosted games.** In console single-player or a console-hosted
   game the console is the server, so it has to compile, and can't.
 
+**Confirmed in S2 (2026-10-28):** a PlayStation player joined the test
+crossplay dedicated server running the `ServerScripts`-tagged build with no
+error and saw the server-drawn screens. So did a PC player on the same server.
+
 ## 2. How a server-drawn frame reaches players
 
 - `IMyTextSurface.DrawFrame()` → `MyTextPanelComponent.DispatchSprites` → a
@@ -46,8 +50,7 @@ What this means for this mod:
   player, 2026-10-27) found it empty**: a tagged LCD saved
   `<Sprites><Length>0</Length>`, and no drawn frame was anywhere in the world
   save. So the driver must redraw every screen right after load, and a late
-  joiner may see a blank screen until the next draw (S2 checks this on a
-  dedicated server).
+  joiner sees a blank screen until the next draw (confirmed in S2, below).
 - **Multi-screen blocks** (cockpits, programmable blocks, …):
   `MyMultiTextPanelComponent.OnUpdateSpriteCollection` is an event marked
   `[Reliable, Server, Broadcast, DistanceRadius(32)]`. Only players within
@@ -58,6 +61,12 @@ What this means for this mod:
 - For drawn sprites to show, the screen should be in script mode with no
   script selected, as with a Programmable Block screen. Confirmed in S1: the
   server sets both itself, and the screen switches over with no player action.
+- **Players don't keep drawn frames (S2, 2026-10-28, PlayStation and PC).** A
+  player who joins, or who walks 40 m away and comes back, sees a blank screen
+  until the next redraw, on LCD panels and cockpits alike. So the driver redraws
+  a screen when a player joins or comes near it, and keeps a periodic redraw
+  as the fallback. The redraw interval is the longest a player can face a blank
+  screen, so change detection can't simply skip unchanged frames.
 
 ## 3. Reusing the 19 apps
 
