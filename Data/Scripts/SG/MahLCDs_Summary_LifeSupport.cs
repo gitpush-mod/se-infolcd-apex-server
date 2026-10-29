@@ -322,7 +322,7 @@ namespace MahrianeIndustries.LCDInfo
         public override void Run()
         {
             // Prevent execution on a dedicated server to avoid server-side load
-            if (Sandbox.ModAPI.MyAPIGateway.Utilities?.IsDedicated ?? false)
+            if ((Sandbox.ModAPI.MyAPIGateway.Utilities?.IsDedicated ?? false) && !ApexServerS3Driver.Driving)
                 return;
 
             // Fix for issue #11 (leftover legacy sibling app sections can trigger

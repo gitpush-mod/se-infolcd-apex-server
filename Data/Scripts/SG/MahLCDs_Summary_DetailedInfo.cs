@@ -137,7 +137,7 @@ namespace MahrianeIndustries.LCDInfo
 
         public override void Run()
         {
-            if (MyAPIGateway.Utilities?.IsDedicated ?? false)
+            if ((MyAPIGateway.Utilities?.IsDedicated ?? false) && !ApexServerS3Driver.Driving)
                 return;
 
             // Fix for issue #11 (leftover legacy sibling app sections can trigger
